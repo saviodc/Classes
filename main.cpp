@@ -19,7 +19,7 @@ using namespace std;
 #include <string>
 
 int gstate = 1;
-string mstate = "STOP";
+string mstate = "GATE";
 
 
 string left(){	return "LEFT";}
@@ -190,7 +190,7 @@ colours c;
 motor::MP2 motP2;
 public:
 
-bool changeP(){
+void changeP(){
 	int rcount = 0;
 	for(int row = 200; row < 222;row++){ // check rows 200-222, middle of camera
 		for(int col = 0; col < 320;col++){
@@ -339,7 +339,8 @@ int main(){
     motor::MP2 motP2;
     camera::CP2 camP2; 
     //double M;
-
+	while(true){
+	take_picture();
 	motor mot;
     double M = cam.camP1();
 
@@ -379,6 +380,7 @@ int main(){
             hardware_exchange();
             
         }
+	}
 		 close_screen_stream();
     }
    
