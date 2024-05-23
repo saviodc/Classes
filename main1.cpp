@@ -1,10 +1,7 @@
 #include <iostream>
 #include "E101.h"
 #include <string>
-#include "CAMclass.cpp" // Add this line to include the CAMclass.cpp file
-#include "COLclass.cpp"
-#include "MOTclass.cpp"
-#include "Server.cpp"
+
 using namespace std;
 
 
