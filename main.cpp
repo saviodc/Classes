@@ -18,8 +18,16 @@ using namespace std;
 #include "E101.h"
 #include <string>
 
-enum state {ONE, TWO, THREE};
-state gstate = ONE;
+int gstate = 1;
+string mstate = "STOP";
+
+
+string left(){	return "LEFT";}
+
+string right(){	return "RIGHT";}
+
+string forward(){return "FORWARD";}
+
 class colours{
 	/*
  CHECKS for specific colours 
@@ -173,7 +181,7 @@ class motor {
 					set_motors(1,60);
 					hardware_exchange();
 				}
-		}	
+		};	
 };
 
 class camera {
@@ -318,21 +326,31 @@ string intersect(){
 
 
 int main(){
-
+	
     init(0);
+    open_screen_stream();
+    take_picture();
+    sleep1(100);
+    bool stop = false;
+    motor mot;
+    camera cam;
+    colours colour;
+    motor::MP1 motP1;
+    motor::MP2 motP2;
+    camera::CP2 camP2; 
+    //double M;
 
-        take_picture();
+	motor mot;
+    double M = cam.camP1();
 
-        M = cam.camP1();
-
-        if (gstate == ONE){
+        if (gstate ==1){
             gate();
-            mot.adjust(M);
+            motP1.adjust(M);
         }
-        if (gstate == TWO){
-            string turn = cam.intersect();
+        if (gstate == 2){
+            string turn = camP2.intersect();
             motP2.state(turn);
-            mot.adjust(M);
+            motP1.adjust(M);
         }
 
         /*if(gstate == THREE){
@@ -361,7 +379,8 @@ int main(){
             hardware_exchange();
             
         }
+		 close_screen_stream();
     }
-    close_screen_stream();
-}
+   
+
 
