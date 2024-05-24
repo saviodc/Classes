@@ -341,6 +341,7 @@ int main(){
     //double M;
 	gate();
 	motP1.fwdFast();
+	sleep1(2000);
 	while(true){
 	take_picture();
 	//motor mot;
