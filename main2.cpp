@@ -87,9 +87,16 @@ class motor {
 				set_motors(5,48+(XAC*M)); // anticlockwise
 				hardware_exchange();
 			}
+
+			void fwdFast(){ // go foward at M intensity
+				
+				set_motors(3,30);// clockwise
+				set_motors(5,65); // anticlockwise
+				hardware_exchange();
+			}
 			void back(double M){ // go backwards at M times power
-				if (M < 0.1){
-					M+=0.1;
+				if (M < 0.2){
+					M+=0.3;
 				}
 				set_motors(3,48+(XAC*M)); // anticlockwise
 				set_motors(5,48-(XC*M)); // clockwise
@@ -97,16 +104,16 @@ class motor {
 					
 			}
 			void left(double M){ // turn left at M intensity
-				if (M < 0.1){
-					M+=0.1;
+				if (M < 0.2){
+					M+=0.3;
 				}
 				set_motors(3,48-(XC*M)); // go clockwise
 				set_motors(5,48); // stop
 				hardware_exchange();
 			}
 			void right(double M){ // turn right at M intensity
-				if (M < 0.1){
-					M+=0.1;
+				if (M < 0.2){
+					M+=0.3;
 				}
 				set_motors(3,48); // stop
 				set_motors(5,48+(XAC*M)); // go anticlockwise
@@ -283,7 +290,7 @@ bool isRight(){ // returns true if right turn
 
 bool isFwd(){ // returns true if forward 
 	int count = 0;
-	for(int row =30;row<80;row++){
+	for(int row =10;row<12;row++){
 		for(int col = 100;col<220;col++){
 			int intense = (int)get_pixel(row,col,3);
 			if(c.isBlack(intense)){
@@ -302,19 +309,15 @@ public:
 string intersect(){
 	if(isFwd() && !isLeft() && !isRight()){ // foward
 		return "FORWARD";
-	}
-	if(!isFwd() && isLeft() && !isRight()){ // left turn
+	}else if(!isFwd() && isLeft() && !isRight()){ // left turn
 		return "LEFT";
-	}
-	if(!isFwd() && !isLeft() && isRight()){ // right turn
+	}else if(!isFwd() && !isLeft() && isRight()){ // right turn
 		return "RFORWARD";
-	}
-	if(!isFwd() && !isLeft() && !isRight()){ // nothing present
+	}else if(isFwd() && isLeft() && isRight()){ // all 3 present
+		return "LEFT";
+	}else{//(!isFwd() && !isLeft() && !isRight()){ // nothing present
 		return "RIGHT";
 	}
-	if(isFwd() && isLeft() && isRight()){ // all 3 present
-		return "LEFT";
-			}
 } 
 
 };
@@ -336,13 +339,12 @@ int main(){
     motor::MP2 motP2;
     camera::CP2 camP2; 
     //double M;
+	gate();
+	motP1.fwdFast();
 	while(true){
 	take_picture();
-	motor mot;
+	//motor mot;
     double M = cam.camP1();
-	    gate();
-
-
         if (gstate ==1){
             motP1.adjust(M);
         }
