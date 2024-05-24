@@ -340,9 +340,10 @@ int main(){
 	take_picture();
 	motor mot;
     double M = cam.camP1();
+	    gate();
+
 
         if (gstate ==1){
-            gate();
             motP1.adjust(M);
         }
         if (gstate == 2){

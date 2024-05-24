@@ -10,5 +10,4 @@ void gate(){
 	send_to_server(message);
 	receive_from_server(message);
 	send_to_server(message);
-	
-}
+};
